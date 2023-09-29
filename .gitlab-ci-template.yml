@@ -1,0 +1,12 @@
+stages:
+  - tests
+
+taiko:
+  stage: tests
+  image: taiko:latest
+  variables:
+    TAIKO_BROWSER_ARGS: '--no-sandbox,--start-maximized,--disable-dev-shm-usage'
+    TAIKO_BROWSER_PATH: '/usr/bin/chromium'
+    TAIKO_SKIP_CHROMIUM_DOWNLOAD: 'true'
+  script:
+    - taiko tests/taiko-test-1.js

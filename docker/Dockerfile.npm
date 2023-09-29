@@ -1,0 +1,12 @@
+# Base image
+FROM node:lts-alpine3.18
+
+# Install applications
+RUN apk update && \
+  apk upgrade --available && \
+  apk add --no-cache \
+    ca-certificates \
+    chromium
+
+# Install Taiko
+RUN npm install -g taiko

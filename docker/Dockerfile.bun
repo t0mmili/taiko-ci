@@ -1,0 +1,14 @@
+# Base image
+FROM oven/bun
+
+# Install applications
+RUN apt-get update && \
+  apt-get -qy upgrade && \
+  apt-get -qy --no-install-recommends install \
+    chromium \
+    nodejs && \
+  rm -rf /var/lib/apt/lists/*
+
+# Install Taiko
+ENV PATH "$PATH:/root/.bun/bin"
+RUN bun install -g taiko
