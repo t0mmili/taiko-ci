@@ -4,7 +4,7 @@ const { openBrowser, goto, click, write, closeBrowser } = require('taiko');
         await openBrowser();
         await goto("google.com");
         await click("Accept all");
-        await write("taiko test automation");
+        await write("taiko test automation", into(textBox({name: 'q'})));
         await click("Google Search");
     } catch (error) {
         console.error(error);

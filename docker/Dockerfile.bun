@@ -1,14 +1,24 @@
-# Base image
-FROM oven/bun
+FROM oven/bun:1-alpine
 
-# Install applications
-RUN apt-get update && \
-  apt-get -qy upgrade && \
-  apt-get -qy --no-install-recommends install \
+LABEL org.opencontainers.image.title="taiko-ci" \
+      org.opencontainers.image.description="Run Taiko tests in CI with ready-to-use Docker image" \
+      org.opencontainers.image.source="https://github.com/t0mmili/taiko-ci" \
+      org.opencontainers.image.version="1-bun" \
+      org.opencontainers.image.licenses="MIT"
+
+      # Install Chromium and dependencies
+RUN apk add --no-cache \
     chromium \
-    nodejs && \
-  rm -rf /var/lib/apt/lists/*
+    nss \
+    freetype \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont \
+    udev
+
+ENV PATH="$PATH:/root/.bun/bin" \
+    TAIKO_BROWSER_PATH=/usr/bin/chromium \
+    TAIKO_SKIP_CHROMIUM_DOWNLOAD=true
 
 # Install Taiko
-ENV PATH "$PATH:/root/.bun/bin"
 RUN bun install -g taiko
