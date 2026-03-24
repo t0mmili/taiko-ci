@@ -3,8 +3,9 @@ stages:
 
 taiko:
   stage: tests
-  image: taiko:latest
+  image: t0mmili/taiko-ci:latest-bun
   variables:
     TAIKO_BROWSER_ARGS: '--no-sandbox,--start-maximized,--disable-dev-shm-usage'
+    TAIKO_ENABLE_ACTION_OUTPUT: 'true'
   script:
     - taiko tests/taiko-test-1.js
