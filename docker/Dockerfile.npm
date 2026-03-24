@@ -1,12 +1,23 @@
-# Base image
-FROM node:lts-alpine3.18
+FROM node:lts-alpine
 
-# Install applications
-RUN apk update && \
-  apk upgrade --available && \
-  apk add --no-cache \
+LABEL org.opencontainers.image.title="taiko-ci" \
+      org.opencontainers.image.description="Taiko web browser test runner in Gitlab CI" \
+      org.opencontainers.image.source="https://github.com/t0mmili/taiko-ci" \
+      org.opencontainers.image.version="1-npm" \
+      org.opencontainers.image.licenses="MIT"
+
+# Install Chromium and dependencies
+RUN apk add --no-cache \
+    chromium \
+    nss \
+    freetype \
+    harfbuzz \
     ca-certificates \
-    chromium
+    ttf-freefont \
+    udev
+
+ENV TAIKO_BROWSER_PATH=/usr/bin/chromium \
+    TAIKO_SKIP_CHROMIUM_DOWNLOAD=true
 
 # Install Taiko
 RUN npm install -g taiko
